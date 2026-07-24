@@ -1,12 +1,641 @@
-UCL TYPER
-⚙ ADMIN
-📝 FORMULARZ
-📋 TABELA TYPÓW
-🏆 SEZON
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCL Typer</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
+:root {
+  --bg:#0a0f0d;--surface:#111a15;--surface2:#172010;--border:#1e2e21;
+  --green:#3ecf6a;--green-dim:#1a4f2c;--green-glow:rgba(62,207,106,0.12);
+  --text:#e8f0ea;--muted:#5a7a62;--danger:#e05252;--gold:#f0c040;
+  --silver:#a0b8c0;--bronze:#c87840;
+  --row-a:#d4edda;--row-b:#f0f9f3;--row-head:#1a472a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh}
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;letter-spacing:.06em;color:var(--green);text-transform:uppercase}
+.logo span{color:var(--text)}
+.nav{display:flex;gap:2px;flex-wrap:wrap}
+.nav-btn{background:none;border:none;color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:6px 14px;cursor:pointer;border-radius:6px;transition:color .15s,background .15s}
+.nav-btn:hover{color:var(--text);background:var(--surface2)}
+.nav-btn.on{color:var(--green);background:var(--green-glow)}
+.main{max-width:1100px;margin:0 auto;padding:28px 20px}
+.view{display:none}.view.on{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.frow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.frow label{font-size:13px;color:var(--muted);min-width:90px}
+.inp{flex:1;height:34px;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;padding:0 10px;transition:border-color .15s}
+.inp:focus{outline:none;border-color:var(--green)}
+.btn{height:34px;padding:0 16px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:border-color .15s,background .15s;white-space:nowrap}
+.btn:hover{border-color:var(--muted);background:var(--green-glow)}
+.btn-green{background:var(--green);color:#0a0f0d;border-color:var(--green);font-weight:600}
+.btn-green:hover{background:#50e07a;border-color:#50e07a}
+.btn-sm{height:28px;padding:0 10px;font-size:12px}
+.btn-danger{border-color:var(--danger);color:var(--danger)}
+.btn-danger:hover{background:rgba(224,82,82,.1)}
+.match-grid{display:grid;grid-template-columns:1fr 38px 14px 38px 1fr 28px;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--border)}
+.match-grid:last-child{border-bottom:none}
+.team-h{text-align:right;font-size:13px}.team-a{font-size:13px}
+.vsep{text-align:center;font-size:11px;color:var(--muted)}
+.score-inp{width:38px;height:32px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:15px;font-weight:600;font-family:'Barlow Condensed',sans-serif}
+.score-inp:focus{outline:none;border-color:var(--green)}
+.p-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:12px}
+.p-row:last-child{border-bottom:none}
+.av{width:32px;height:32px;border-radius:50%;background:var(--green-dim);color:var(--green);display:inline-flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;flex-shrink:0}
+.tog-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.empty{text-align:center;padding:28px;color:var(--muted);font-size:13px}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.info-note{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+.divider{border:none;border-top:1px solid var(--border);margin:14px 0}
+.pitch-bar{height:3px;background:repeating-linear-gradient(90deg,var(--green) 0,var(--green) 20px,transparent 20px,transparent 40px);opacity:.2;margin-bottom:20px;border-radius:2px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--green);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--green);z-index:999;display:none;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.toast.err{border-color:var(--danger);color:var(--danger)}
+.toast.show{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* POSTEP */
+.prog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
+.prog-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);font-size:13px}
+.prog-item.done{border-color:var(--green-dim);background:var(--green-glow);color:var(--green)}
+/* FORM */
+.typ-grid{display:grid;grid-template-columns:1fr 44px 14px 44px 1fr;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--border)}
+.typ-grid:last-child{border-bottom:none}
+.typ-h{text-align:right;font-size:15px;font-weight:600}
+.typ-a{font-size:15px;font-weight:600}
+.typ-inp{width:44px;height:40px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700}
+.typ-inp:focus{outline:none;border-color:var(--green);border-width:2px}
+.success{background:var(--green-dim);border:1px solid var(--green);border-radius:12px;padding:32px;text-align:center}
+.success h3{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.success p{color:var(--muted);font-size:14px}
+/* PICKS TABLE */
+#picks-table-wrap{overflow-x:auto;margin-top:4px}
+.picks-tbl{border-collapse:collapse;font-family:Arial,sans-serif;font-size:12px;width:100%}
+.picks-tbl th{background:var(--row-head);color:#fff;padding:7px 8px;text-align:center;font-weight:700;white-space:nowrap;border:1px solid #555;font-size:12px}
+.picks-tbl th.match-col{text-align:left;min-width:160px;font-size:12px}
+.picks-tbl td{padding:5px 8px;text-align:center;border:1px solid #bbb;white-space:nowrap;font-size:12px}
+.picks-tbl td.match-name{text-align:left;font-weight:700;color:#1a472a;background:inherit}
+.picks-tbl tr.row-a td{background:var(--row-a)}
+.picks-tbl tr.row-b td{background:var(--row-b)}
+.picks-tbl td.cell-ok{background:#82c91e !important;font-weight:700;color:#1a472a}
+.picks-tbl td.cell-half{background:#ffd43b !important;font-weight:700;color:#7a5c00}
+.picks-tbl tr.pts-row td{background:#1a472a;color:#fff;font-weight:700;text-align:center;font-size:13px;border:1px solid #333}
+.picks-tbl tr.pts-row td.match-name{text-align:left;color:#fff}
+/* SEASON TABLE */
+.s-table{width:100%;border-collapse:collapse}
+.s-table th{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);text-align:left}
+.s-table td{padding:9px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
+.s-table tr:last-child td{border-bottom:none}
+.s-table tr:hover td{background:var(--green-glow)}
+.rank-num{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--muted)}
+.rank-1 .rank-num{color:var(--gold)}.rank-2 .rank-num{color:var(--silver)}.rank-3 .rank-num{color:var(--bronze)}
+.pts-big{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--green)}
+@media print{
+  .header,.nav,.btn,.info-note,.card-title,.sec-hdr .btn{display:none !important}
+  body{background:#fff;color:#000}
+  .card{background:#fff;border:none;padding:0}
+  #picks-table-wrap{overflow:visible}
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">UCL <span>Typer</span></div>
+  <nav class="nav">
+    <button class="nav-btn on" onclick="sv('admin')">⚙ Admin</button>
+    <button class="nav-btn" onclick="sv('form')">📝 Formularz</button>
+    <button class="nav-btn" onclick="sv('picks')">📋 Tabela typów</button>
+    <button class="nav-btn" onclick="sv('table')">🏆 Sezon</button>
+  </nav>
+</header>
+<main class="main">
 
-NOWA KOLEJKA
-Nazwa kolejki
+<!-- ADMIN -->
+<div id="v-admin" class="view on">
+  <div class="pitch-bar"></div>
 
-+ Utwórz kolejkę
-WSZYSTKIE KOLEJKI
-Brak kolejek.
+  <div class="card">
+    <div class="card-title">Nowa kolejka</div>
+    <div class="frow"><label>Nazwa kolejki</label><input class="inp" id="i-rname" placeholder="np. Faza grupowa, kolejka 1"></div>
+    <div style="display:flex;justify-content:flex-end"><button class="btn btn-green" onclick="createRound()">+ Utwórz kolejkę</button></div>
+  </div>
+
+  <div id="admin-round-section" style="display:none">
+    <div class="card">
+      <div class="sec-hdr">
+        <div class="card-title" style="margin:0">Aktywna kolejka: <span id="active-round-name" style="color:var(--green)"></span></div>
+      </div>
+      <div class="frow"><label>Gospodarz</label><input class="inp" id="ih" placeholder="np. Real Madrid"></div>
+      <div class="frow"><label>Gość</label><input class="inp" id="ia" placeholder="np. Bayern Monachium"></div>
+      <div class="frow"><label>Data / czas</label><input class="inp" id="id" placeholder="np. 15.10 20:45"></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:4px"><button class="btn btn-green" onclick="addMatch()">+ Dodaj mecz</button></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr"><div class="card-title" style="margin:0">Mecze w kolejce</div></div>
+      <div id="match-list"><div class="empty">Brak meczów.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr">
+        <div class="card-title" style="margin:0">Postęp typowania</div>
+        <button class="btn btn-sm" onclick="loadProgress()">🔄 Odśwież</button>
+      </div>
+      <div id="progress-list"><div class="empty">Kliknij Odśwież żeby sprawdzić kto wpisał typy.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr">
+        <div class="card-title" style="margin:0">Uczestnicy <span id="p-count" style="color:var(--green)"></span></div>
+        <button class="btn btn-sm" onclick="addP()">+ Dodaj uczestnika</button>
+      </div>
+      <div id="p-list"><div class="empty">Brak uczestników.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Wpisz wyniki meczów</div>
+      <div id="results-form"><div class="empty">Dodaj mecze żeby wpisać wyniki.</div></div>
+      <hr class="divider">
+      <div style="display:flex;justify-content:flex-end">
+        <button class="btn btn-green" onclick="saveResults()">💾 Zapisz wyniki i przelicz punkty</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Wszystkie kolejki</div>
+    <div id="rounds-list"><div class="empty">Brak kolejek.</div></div>
+  </div>
+</div>
+
+<!-- FORMULARZ UCZESTNIKA -->
+<div id="v-form" class="view">
+  <div id="form-content"></div>
+</div>
+
+<!-- TABELA TYPÓW -->
+<div id="v-picks" class="view">
+  <div class="card">
+    <div class="sec-hdr">
+      <div>
+        <div class="card-title" style="margin:0">Tabela typów</div>
+        <div id="picks-round-name" style="font-size:16px;font-weight:600;color:var(--green);margin-top:4px"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <div id="rounds-switcher" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+        <button class="btn btn-sm btn-green" onclick="window.print()">🖨 Drukuj</button>
+      </div>
+    </div>
+    <div class="info-note" style="margin-bottom:14px">
+      Zrób printscreen tej tabeli i wrzuć na WordPress. Zielone komórki = dokładny wynik (+3 pkt), żółte = trafiony typ (+1 pkt). Kolorowanie pojawia się po wpisaniu wyników przez admina.
+    </div>
+    <div id="picks-table-wrap"><div class="empty"><span class="spinner"></span> Ładowanie...</div></div>
+  </div>
+</div>
+
+<!-- TABELA SEZONOWA -->
+<div id="v-table" class="view">
+  <div id="table-content"></div>
+</div>
+
+</main>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAQo-27fD97AYKYBE54pllxqvS9uggJmwc",
+  authDomain: "ucl-typer.firebaseapp.com",
+  projectId: "ucl-typer",
+  storageBucket: "ucl-typer.firebasestorage.app",
+  messagingSenderId: "465756157240",
+  appId: "1:465756157240:web:0efe4ced8f1a1f3df2bdcd"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let activeRound = null, rounds = [], participants = [], matches = [];
+
+function toast(msg, err=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show'+(err?' err':'');
+  setTimeout(()=>t.className='toast', 3000);
+}
+
+window.sv = async function(v) {
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>
+    b.classList.toggle('on',['admin','form','picks','table'][i]===v));
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('on'));
+  document.getElementById('v-'+v).classList.add('on');
+  if(v==='form') await renderForm();
+  if(v==='picks') await renderPicksTable(activeRound);
+  if(v==='table') await renderSeasonTable();
+}
+
+// ROUNDS
+window.createRound = async function() {
+  const name = document.getElementById('i-rname').value.trim();
+  if(!name){toast('Wpisz nazwę kolejki.',true);return;}
+  const id = 'round_'+Date.now();
+  await setDoc(doc(db,'rounds',id),{id,name,createdAt:Date.now()});
+  document.getElementById('i-rname').value='';
+  toast('Kolejka "'+name+'" utworzona!');
+  await loadRounds();
+  await setActiveRound(rounds.find(r=>r.id===id));
+}
+
+async function loadRounds() {
+  const snap = await getDocs(collection(db,'rounds'));
+  rounds = snap.docs.map(d=>d.data()).sort((a,b)=>a.createdAt-b.createdAt);
+  renderRoundsList();
+}
+
+function renderRoundsList() {
+  const el = document.getElementById('rounds-list');
+  if(!rounds.length){el.innerHTML='<div class="empty">Brak kolejek.</div>';return;}
+  el.innerHTML = rounds.map(r=>
+    '<div class="p-row">'+
+    '<span style="font-size:14px;font-weight:500">'+r.name+'</span>'+
+    '<button class="btn btn-sm" onclick="loadRound(\''+r.id+'\')">Otwórz →</button>'+
+    '</div>'
+  ).join('');
+}
+
+window.loadRound = async function(id) {
+  const r = rounds.find(r=>r.id===id);
+  if(r){await setActiveRound(r);sv('admin');}
+}
+
+async function setActiveRound(r) {
+  activeRound=r;
+  document.getElementById('admin-round-section').style.display='block';
+  document.getElementById('active-round-name').textContent=r.name;
+  await loadMatches();
+  await loadParticipants();
+}
+
+// MATCHES
+async function loadMatches() {
+  if(!activeRound)return;
+  const snap = await getDocs(collection(db,'rounds',activeRound.id,'matches'));
+  matches = snap.docs.map(d=>d.data()).sort((a,b)=>a.createdAt-b.createdAt);
+  renderMatchList();
+  renderResultsForm();
+}
+
+window.addMatch = async function() {
+  if(!activeRound)return;
+  const h=document.getElementById('ih').value.trim();
+  const a=document.getElementById('ia').value.trim();
+  const d=document.getElementById('id').value.trim();
+  if(!h||!a){toast('Wpisz obydwa zespoły.',true);return;}
+  const id='match_'+Date.now();
+  await setDoc(doc(db,'rounds',activeRound.id,'matches',id),{id,h,a,d,rh:'',ra:'',createdAt:Date.now()});
+  ['ih','ia','id'].forEach(id=>document.getElementById(id).value='');
+  toast('Mecz dodany!');
+  await loadMatches();
+}
+
+window.delMatch = async function(id) {
+  if(!confirm('Usunąć mecz?'))return;
+  await deleteDoc(doc(db,'rounds',activeRound.id,'matches',id));
+  await loadMatches();
+}
+
+function renderMatchList() {
+  const el=document.getElementById('match-list');
+  if(!matches.length){el.innerHTML='<div class="empty">Brak meczów.</div>';return;}
+  el.innerHTML=matches.map(m=>
+    '<div class="match-grid">'+
+    '<span class="team-h">'+m.h+'</span>'+
+    '<span class="vsep">'+(m.d||'')+'</span>'+
+    '<span class="vsep" style="font-size:10px">vs</span>'+
+    '<span></span>'+
+    '<span class="team-a">'+m.a+'</span>'+
+    '<button class="btn btn-sm btn-danger" onclick="delMatch(\''+m.id+'\')">✕</button>'+
+    '</div>'
+  ).join('');
+}
+
+function renderResultsForm() {
+  const el=document.getElementById('results-form');
+  if(!matches.length){el.innerHTML='<div class="empty">Dodaj mecze.</div>';return;}
+  el.innerHTML=matches.map(m=>
+    '<div class="match-grid">'+
+    '<span class="team-h">'+m.h+'</span>'+
+    '<input class="score-inp" type="number" min="0" max="20" value="'+m.rh+'" placeholder="–" id="rh_'+m.id+'">'+
+    '<span class="vsep">:</span>'+
+    '<input class="score-inp" type="number" min="0" max="20" value="'+m.ra+'" placeholder="–" id="ra_'+m.id+'">'+
+    '<span class="team-a">'+m.a+'</span>'+
+    '<span></span>'+
+    '</div>'
+  ).join('');
+}
+
+window.saveResults = async function() {
+  if(!activeRound||!matches.length)return;
+  for(const m of matches){
+    const rh=document.getElementById('rh_'+m.id)?.value||'';
+    const ra=document.getElementById('ra_'+m.id)?.value||'';
+    await updateDoc(doc(db,'rounds',activeRound.id,'matches',m.id),{rh,ra});
+    m.rh=rh;m.ra=ra;
+  }
+  await calcAndSavePoints();
+  toast('Wyniki zapisane i punkty przeliczone!');
+}
+
+// PARTICIPANTS
+async function loadParticipants() {
+  const snap=await getDocs(collection(db,'participants'));
+  participants=snap.docs.map(d=>d.data()).sort((a,b)=>a.name.localeCompare(b.name,'pl'));
+  renderPList();
+}
+
+window.addP = async function() {
+  const n=prompt('Imię uczestnika:');
+  if(!n||!n.trim())return;
+  const name=n.trim();
+  if(participants.find(p=>p.name.toLowerCase()===name.toLowerCase())){toast('Uczestnik już istnieje.',true);return;}
+  const token=Math.random().toString(36).slice(2,9).toUpperCase();
+  const id='p_'+Date.now();
+  await setDoc(doc(db,'participants',id),{id,name,token,seasonPts:0});
+  toast('Dodano: '+name);
+  await loadParticipants();
+}
+
+window.delP = async function(id) {
+  if(!confirm('Usunąć uczestnika?'))return;
+  await deleteDoc(doc(db,'participants',id));
+  await loadParticipants();
+}
+
+function renderPList() {
+  const el=document.getElementById('p-list');
+  const cnt=document.getElementById('p-count');
+  cnt.textContent=participants.length?'('+participants.length+')':'';
+  if(!participants.length){el.innerHTML='<div class="empty">Brak uczestników.</div>';return;}
+  el.innerHTML=participants.map(p=>
+    '<div class="p-row">'+
+    '<div style="display:flex;align-items:center;gap:10px">'+
+    '<div class="av">'+p.name.slice(0,2).toUpperCase()+'</div>'+
+    '<div><div style="font-size:14px;font-weight:500">'+p.name+'</div>'+
+    '<div style="font-size:11px;color:var(--muted);font-family:monospace">Token: '+p.token+'</div></div></div>'+
+    '<div style="display:flex;gap:6px">'+
+    '<button class="btn btn-sm" onclick="copyLink(\''+p.token+'\')">📋 Link</button>'+
+    '<button class="btn btn-sm btn-danger" onclick="delP(\''+p.id+'\')">✕</button>'+
+    '</div></div>'
+  ).join('');
+}
+
+window.copyLink = function(token) {
+  const link=window.location.href.split('?')[0]+'?t='+token;
+  navigator.clipboard.writeText(link).then(()=>toast('Link skopiowany!')).catch(()=>alert('Link:\n'+link));
+}
+
+// POSTĘP TYPOWANIA
+window.loadProgress = async function() {
+  if(!activeRound||!participants.length)return;
+  const el=document.getElementById('progress-list');
+  el.innerHTML='<div class="empty"><span class="spinner"></span> Sprawdzam...</div>';
+  const picksSnap=await getDocs(collection(db,'rounds',activeRound.id,'picks'));
+  const done=new Set(picksSnap.docs.map(d=>d.id));
+  const doneCount=participants.filter(p=>done.has(p.id)).length;
+  el.innerHTML=
+    '<div style="font-size:14px;margin-bottom:12px">'+
+    '<strong style="color:var(--green);font-size:18px">'+doneCount+'</strong>'+
+    '<span style="color:var(--muted)"> / '+participants.length+' uczestników wpisało typy</span>'+
+    '</div>'+
+    '<div class="prog-grid">'+
+    participants.map(p=>
+      '<div class="prog-item'+(done.has(p.id)?' done':'')+'">'+
+      '<span>'+(done.has(p.id)?'✅':'⏳')+'</span>'+
+      '<span style="font-weight:500;flex:1">'+p.name+'</span>'+
+      '</div>'
+    ).join('')+
+    '</div>';
+}
+
+// PUNKTY
+function calcMatchPts(ph,pa,rh,ra){
+  ph=parseInt(ph);pa=parseInt(pa);rh=parseInt(rh);ra=parseInt(ra);
+  if(isNaN(ph)||isNaN(pa)||isNaN(rh)||isNaN(ra))return 0;
+  if(ph===rh&&pa===ra)return 3;
+  if((ph>pa&&rh>ra)||(ph<pa&&rh<ra)||(ph===pa&&rh===ra))return 1;
+  return 0;
+}
+
+async function calcAndSavePoints() {
+  if(!activeRound)return;
+  const played=matches.filter(m=>m.rh!==''&&m.ra!=='');
+  if(!played.length)return;
+  const picksSnap=await getDocs(collection(db,'rounds',activeRound.id,'picks'));
+  for(const p of participants){
+    const pickDoc=picksSnap.docs.find(d=>d.id===p.id);
+    if(!pickDoc)continue;
+    const picks=pickDoc.data().picks||{};
+    let pts=0;
+    played.forEach(m=>{const pk=picks[m.id];if(pk)pts+=calcMatchPts(pk.h,pk.a,m.rh,m.ra);});
+    await setDoc(doc(db,'rounds',activeRound.id,'roundPoints',p.id),{participantId:p.id,pts});
+  }
+  await calcSeasonPoints();
+}
+
+async function calcSeasonPoints() {
+  await loadRoundsData();
+  for(const p of participants){
+    let total=0;
+    for(const r of rounds){
+      const snap=await getDoc(doc(db,'rounds',r.id,'roundPoints',p.id));
+      if(snap.exists())total+=snap.data().pts||0;
+    }
+    await updateDoc(doc(db,'participants',p.id),{seasonPts:total});
+  }
+  await loadParticipants();
+}
+
+async function loadRoundsData() {
+  const snap=await getDocs(collection(db,'rounds'));
+  rounds=snap.docs.map(d=>d.data()).sort((a,b)=>a.createdAt-b.createdAt);
+}
+
+// FORMULARZ
+async function renderForm() {
+  const el=document.getElementById('form-content');
+  const urlParams=new URLSearchParams(window.location.search);
+  const token=urlParams.get('t');
+  await loadRoundsData();
+  if(!token){
+    el.innerHTML='<div class="card"><div class="empty">To jest widok uczestnika. Wejdź przez swój unikalny link żeby typować.</div></div>';
+    return;
+  }
+  const snap=await getDocs(collection(db,'participants'));
+  const pDoc=snap.docs.find(d=>d.data().token===token);
+  if(!pDoc){el.innerHTML='<div class="card"><div class="empty">Nieprawidłowy link. Skontaktuj się z adminem.</div></div>';return;}
+  const participant=pDoc.data();
+  const openRound=rounds.find(r=>!r.closed)||rounds[rounds.length-1];
+  if(!openRound){el.innerHTML='<div class="card"><div class="empty">Brak aktywnej kolejki do typowania.</div></div>';return;}
+  const mSnap=await getDocs(collection(db,'rounds',openRound.id,'matches'));
+  const roundMatches=mSnap.docs.map(d=>d.data()).sort((a,b)=>a.createdAt-b.createdAt);
+  if(!roundMatches.length){el.innerHTML='<div class="card"><div class="empty">Admin nie dodał jeszcze meczów.</div></div>';return;}
+  const existingPick=await getDoc(doc(db,'rounds',openRound.id,'picks',participant.id));
+  const existingPicks=existingPick.exists()?existingPick.data().picks||{}:{};
+  el.innerHTML=
+    '<div class="card">'+
+    '<div class="card-title">👋 Cześć, '+participant.name+'!</div>'+
+    '<div style="font-size:13px;color:var(--muted);margin-bottom:16px">Kolejka: <strong style="color:var(--text)">'+openRound.name+'</strong></div>'+
+    roundMatches.map(m=>{
+      const ep=existingPicks[m.id]||{};
+      return '<div class="typ-grid">'+
+        '<span class="typ-h">'+m.h+'</span>'+
+        '<input class="typ-inp" type="number" min="0" max="20" placeholder="–" id="ph_'+m.id+'" value="'+(ep.h||'')+'">'+
+        '<span class="vsep">:</span>'+
+        '<input class="typ-inp" type="number" min="0" max="20" placeholder="–" id="pa_'+m.id+'" value="'+(ep.a||'')+'">'+
+        '<span class="typ-a">'+m.a+'</span>'+
+        '</div>';
+    }).join('')+
+    '<div style="margin-top:20px;text-align:center">'+
+    '<button class="btn btn-green" style="height:42px;padding:0 32px;font-size:15px" onclick="submitPicks(\''+participant.id+'\',\''+openRound.id+'\',['+roundMatches.map(m=>"'"+m.id+"'").join(',')+'])">✓ Wyślij typy</button>'+
+    '</div>'+
+    (existingPick.exists()?'<div class="info-note" style="text-align:center;margin-top:10px">ℹ️ Masz już zapisane typy — możesz je zmienić przed zamknięciem kolejki.</div>':'')+
+    '</div>';
+}
+
+window.submitPicks = async function(participantId,roundId,matchIds) {
+  const picks={};let any=false;
+  for(const mid of matchIds){
+    const h=document.getElementById('ph_'+mid)?.value;
+    const a=document.getElementById('pa_'+mid)?.value;
+    if(h!==''&&a!==''&&h!==undefined&&a!==undefined){picks[mid]={h,a};any=true;}
+  }
+  if(!any){toast('Wpisz co najmniej jeden typ.',true);return;}
+  await setDoc(doc(db,'rounds',roundId,'picks',participantId),{participantId,picks,updatedAt:Date.now()});
+  document.getElementById('form-content').innerHTML=
+    '<div class="success"><div style="font-size:40px;margin-bottom:12px">⚽</div>'+
+    '<h3>Typy zapisane!</h3>'+
+    '<p>Twoje typy zostały bezpiecznie zapisane w bazie danych.<br>Tabela typów pojawi się przed pierwszym meczem kolejki.</p></div>';
+}
+
+// TABELA TYPÓW (do printscreena)
+async function renderPicksTable(round) {
+  const el=document.getElementById('picks-table-wrap');
+  el.innerHTML='<div class="empty"><span class="spinner"></span> Ładowanie...</div>';
+  await loadRoundsData();
+
+  // switcher kolejek
+  const sw=document.getElementById('rounds-switcher');
+  sw.innerHTML=rounds.map(r=>
+    '<button class="btn btn-sm'+(activeRound&&r.id===activeRound.id?' btn-green':'')+'" onclick="switchPicksRound(\''+r.id+'\')">'+r.name+'</button>'
+  ).join('');
+
+  if(!round){
+    round=rounds[rounds.length-1];
+    if(!round){el.innerHTML='<div class="empty">Brak kolejek.</div>';return;}
+  }
+
+  document.getElementById('picks-round-name').textContent=round.name;
+
+  const mSnap=await getDocs(collection(db,'rounds',round.id,'matches'));
+  const rMatches=mSnap.docs.map(d=>d.data()).sort((a,b)=>a.createdAt-b.createdAt);
+  if(!rMatches.length){el.innerHTML='<div class="empty">Brak meczów w tej kolejce.</div>';return;}
+
+  const pSnap=await getDocs(collection(db,'participants'));
+  const allP=pSnap.docs.map(d=>d.data()).sort((a,b)=>a.name.localeCompare(b.name,'pl'));
+
+  const picksSnap=await getDocs(collection(db,'rounds',round.id,'picks'));
+  const allPicks={};
+  picksSnap.docs.forEach(d=>{allPicks[d.id]=d.data().picks||{};});
+
+  const hasResults=rMatches.some(m=>m.rh!==''&&m.ra!=='');
+
+  let html='<table class="picks-tbl"><thead><tr>'+
+    '<th class="match-col">Mecz</th>'+
+    allP.map(p=>'<th>'+p.name+'</th>').join('')+
+    '</tr></thead><tbody>';
+
+  rMatches.forEach((m,idx)=>{
+    const rowClass=idx%2===0?'row-a':'row-b';
+    html+='<tr class="'+rowClass+'">'+
+      '<td class="match-name">'+m.h+' – '+m.a+'</td>'+
+      allP.map(p=>{
+        const pk=allPicks[p.id]?.[m.id];
+        if(!pk)return'<td>–</td>';
+        const val=pk.h+':'+pk.a;
+        if(!hasResults)return'<td>'+val+'</td>';
+        const pts=calcMatchPts(pk.h,pk.a,m.rh,m.ra);
+        const cls=pts===3?'cell-ok':pts===1?'cell-half':'';
+        return'<td'+(cls?' class="'+cls+'"':'')+'>'+val+'</td>';
+      }).join('')+
+      '</tr>';
+  });
+
+  if(hasResults){
+    html+='<tr class="pts-row"><td class="match-name">PUNKTY</td>'+
+      allP.map(p=>{
+        const picks=allPicks[p.id]||{};
+        let pts=0;
+        rMatches.forEach(m=>{const pk=picks[m.id];if(pk)pts+=calcMatchPts(pk.h,pk.a,m.rh,m.ra);});
+        return'<td>'+pts+'</td>';
+      }).join('')+
+      '</tr>';
+  }
+
+  html+='</tbody></table>';
+  el.innerHTML=html;
+}
+
+window.switchPicksRound = async function(id) {
+  const r=rounds.find(r=>r.id===id);
+  if(r){activeRound=r;await renderPicksTable(r);}
+}
+
+// TABELA SEZONOWA
+async function renderSeasonTable() {
+  const el=document.getElementById('table-content');
+  el.innerHTML='<div class="card"><div class="empty"><span class="spinner"></span> Ładowanie...</div></div>';
+  await loadRoundsData();
+  const pSnap=await getDocs(collection(db,'participants'));
+  const allP=pSnap.docs.map(d=>d.data());
+  if(!allP.length){el.innerHTML='<div class="card"><div class="empty">Brak uczestników.</div></div>';return;}
+  const pData={};
+  allP.forEach(p=>{pData[p.id]={...p,roundPts:{}};});
+  for(const r of rounds){
+    const rpSnap=await getDocs(collection(db,'rounds',r.id,'roundPoints'));
+    rpSnap.docs.forEach(d=>{if(pData[d.id])pData[d.id].roundPts[r.id]=d.data().pts||0;});
+  }
+  const sorted=Object.values(pData).sort((a,b)=>(b.seasonPts||0)-(a.seasonPts||0));
+  el.innerHTML='<div class="card"><div class="card-title">Klasyfikacja sezonowa</div>'+
+    '<table class="s-table"><thead><tr><th>#</th><th>Uczestnik</th><th>Pkt sezon</th>'+
+    rounds.map(r=>'<th style="text-align:center;font-size:10px">'+r.name+'</th>').join('')+
+    '</tr></thead><tbody>'+
+    sorted.map((p,i)=>{
+      const rc=i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'';
+      return'<tr class="'+rc+'">'+
+        '<td><span class="rank-num">'+(i+1)+'</span></td>'+
+        '<td><div style="display:flex;align-items:center;gap:8px"><div class="av">'+p.name.slice(0,2).toUpperCase()+'</div><span style="font-weight:500">'+p.name+'</span></div></td>'+
+        '<td><span class="pts-big">'+(p.seasonPts||0)+'</span></td>'+
+        rounds.map(r=>'<td style="text-align:center;font-weight:500">'+(p.roundPts[r.id]!==undefined?p.roundPts[r.id]:'–')+'</td>').join('')+
+        '</tr>';
+    }).join('')+
+    '</tbody></table></div>';
+}
+
+// INIT
+async function init(){
+  await loadRounds();
+  await loadParticipants();
+  const urlParams=new URLSearchParams(window.location.search);
+  if(urlParams.get('t'))sv('form');
+}
+window.calcMatchPts=calcMatchPts;
+init();
+</script>
+</body>
+</html>
