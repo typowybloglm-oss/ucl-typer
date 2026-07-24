@@ -30,6 +30,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .frow label{font-size:13px;color:var(--muted);min-width:90px}
 .inp{flex:1;height:34px;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;padding:0 10px;transition:border-color .15s}
 .inp:focus{outline:none;border-color:var(--green)}
+.inp-pin{width:120px;height:48px;text-align:center;letter-spacing:8px;font-size:22px;font-weight:700;font-family:'Barlow Condensed',sans-serif;background:var(--bg);border:2px solid var(--border);border-radius:10px;color:var(--text)}
+.inp-pin:focus{outline:none;border-color:var(--green)}
 .btn{height:34px;padding:0 16px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:border-color .15s,background .15s;white-space:nowrap}
 .btn:hover{border-color:var(--muted);background:var(--green-glow)}
 .btn-green{background:var(--green);color:#0a0f0d;border-color:var(--green);font-weight:600}
@@ -37,6 +39,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .btn-sm{height:28px;padding:0 10px;font-size:12px}
 .btn-danger{border-color:var(--danger);color:var(--danger)}
 .btn-danger:hover{background:rgba(224,82,82,.1)}
+.btn-big{height:48px;padding:0 32px;font-size:16px;border-radius:10px}
 .match-grid{display:grid;grid-template-columns:1fr 38px 14px 38px 1fr 28px;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--border)}
 .match-grid:last-child{border-bottom:none}
 .team-h{text-align:right;font-size:13px}.team-a{font-size:13px}
@@ -46,7 +49,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .p-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:12px}
 .p-row:last-child{border-bottom:none}
 .av{width:32px;height:32px;border-radius:50%;background:var(--green-dim);color:var(--green);display:inline-flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;flex-shrink:0}
-.tog-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
 .empty{text-align:center;padding:28px;color:var(--muted);font-size:13px}
 .sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
 .info-note{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
@@ -58,6 +60,15 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .toast.err{border-color:var(--danger);color:var(--danger)}
 .toast.show{display:block;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* LOGIN */
+.login-wrap{max-width:400px;margin:60px auto 0;text-align:center}
+.login-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:28px}
+.name-select{width:100%;height:48px;background:var(--bg);border:2px solid var(--border);border-radius:10px;color:var(--text);font-size:15px;font-family:'Inter',sans-serif;padding:0 12px;margin-bottom:16px;cursor:pointer}
+.name-select:focus{outline:none;border-color:var(--green)}
+.pin-label{font-size:13px;color:var(--muted);margin-bottom:8px}
+.pin-error{font-size:13px;color:var(--danger);margin-top:8px;min-height:20px}
+.first-login-note{background:var(--green-glow);border:1px solid var(--green-dim);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--green);margin-bottom:16px;text-align:left}
 /* POSTEP */
 .prog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
 .prog-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);font-size:13px}
@@ -76,7 +87,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 #picks-table-wrap{overflow-x:auto;margin-top:4px}
 .picks-tbl{border-collapse:collapse;font-family:Arial,sans-serif;font-size:12px;width:100%}
 .picks-tbl th{background:var(--row-head);color:#fff;padding:7px 8px;text-align:center;font-weight:700;white-space:nowrap;border:1px solid #555;font-size:12px}
-.picks-tbl th.match-col{text-align:left;min-width:160px;font-size:12px}
+.picks-tbl th.match-col{text-align:left;min-width:160px}
 .picks-tbl td{padding:5px 8px;text-align:center;border:1px solid #bbb;white-space:nowrap;font-size:12px}
 .picks-tbl td.match-name{text-align:left;font-weight:700;color:#1a472a;background:inherit}
 .picks-tbl tr.row-a td{background:var(--row-a)}
@@ -85,7 +96,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .picks-tbl td.cell-half{background:#ffd43b !important;font-weight:700;color:#7a5c00}
 .picks-tbl tr.pts-row td{background:#1a472a;color:#fff;font-weight:700;text-align:center;font-size:13px;border:1px solid #333}
 .picks-tbl tr.pts-row td.match-name{text-align:left;color:#fff}
-/* SEASON TABLE */
+/* SEASON */
 .s-table{width:100%;border-collapse:collapse}
 .s-table th{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);text-align:left}
 .s-table td{padding:9px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
@@ -105,41 +116,61 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 <body>
 <header class="header">
   <div class="logo">UCL <span>Typer</span></div>
-  <nav class="nav">
+  <nav class="nav" id="main-nav" style="display:none">
     <button class="nav-btn on" onclick="sv('admin')">⚙ Admin</button>
-    <button class="nav-btn" onclick="sv('form')">📝 Formularz</button>
+    <button class="nav-btn" onclick="sv('form')">📝 Typuj</button>
     <button class="nav-btn" onclick="sv('picks')">📋 Tabela typów</button>
     <button class="nav-btn" onclick="sv('table')">🏆 Sezon</button>
   </nav>
+  <div id="user-badge" style="display:none;font-size:13px;color:var(--muted)"></div>
 </header>
 <main class="main">
 
-<!-- ADMIN -->
-<div id="v-admin" class="view on">
-  <div class="pitch-bar"></div>
+<!-- LOGIN -->
+<div id="v-login" class="view on">
+  <div class="login-wrap">
+    <div class="login-title">⚽ UCL Typer</div>
+    <div class="login-sub">Liga Mistrzów — typowanie wyników</div>
+    <select class="name-select" id="login-name">
+      <option value="">— Wybierz swoje imię —</option>
+    </select>
+    <div id="first-login-note" class="first-login-note" style="display:none">
+      👋 Pierwsze logowanie? Ustaw swój 4-cyfrowy PIN — zapamiętaj go, będziesz go potrzebować przy każdym kolejnym logowaniu.
+    </div>
+    <div class="pin-label" id="pin-label">Wpisz PIN (4 cyfry)</div>
+    <div style="display:flex;justify-content:center;margin-bottom:8px">
+      <input class="inp-pin" type="password" inputmode="numeric" maxlength="4" id="login-pin" placeholder="••••" oninput="onPinInput()">
+    </div>
+    <div class="pin-error" id="pin-error"></div>
+    <div style="margin-top:16px">
+      <button class="btn btn-green btn-big" onclick="doLogin()">Wejdź →</button>
+    </div>
+    <div style="margin-top:24px">
+      <button class="btn btn-sm" onclick="adminLogin()">🔐 Jestem adminem</button>
+    </div>
+  </div>
+</div>
 
+<!-- ADMIN -->
+<div id="v-admin" class="view">
+  <div class="pitch-bar"></div>
   <div class="card">
     <div class="card-title">Nowa kolejka</div>
     <div class="frow"><label>Nazwa kolejki</label><input class="inp" id="i-rname" placeholder="np. Faza grupowa, kolejka 1"></div>
     <div style="display:flex;justify-content:flex-end"><button class="btn btn-green" onclick="createRound()">+ Utwórz kolejkę</button></div>
   </div>
-
   <div id="admin-round-section" style="display:none">
     <div class="card">
-      <div class="sec-hdr">
-        <div class="card-title" style="margin:0">Aktywna kolejka: <span id="active-round-name" style="color:var(--green)"></span></div>
-      </div>
+      <div class="sec-hdr"><div class="card-title" style="margin:0">Aktywna kolejka: <span id="active-round-name" style="color:var(--green)"></span></div></div>
       <div class="frow"><label>Gospodarz</label><input class="inp" id="ih" placeholder="np. Real Madrid"></div>
       <div class="frow"><label>Gość</label><input class="inp" id="ia" placeholder="np. Bayern Monachium"></div>
       <div class="frow"><label>Data / czas</label><input class="inp" id="id" placeholder="np. 15.10 20:45"></div>
       <div style="display:flex;justify-content:flex-end;margin-top:4px"><button class="btn btn-green" onclick="addMatch()">+ Dodaj mecz</button></div>
     </div>
-
     <div class="card">
       <div class="sec-hdr"><div class="card-title" style="margin:0">Mecze w kolejce</div></div>
       <div id="match-list"><div class="empty">Brak meczów.</div></div>
     </div>
-
     <div class="card">
       <div class="sec-hdr">
         <div class="card-title" style="margin:0">Postęp typowania</div>
@@ -147,7 +178,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
       </div>
       <div id="progress-list"><div class="empty">Kliknij Odśwież żeby sprawdzić kto wpisał typy.</div></div>
     </div>
-
     <div class="card">
       <div class="sec-hdr">
         <div class="card-title" style="margin:0">Uczestnicy <span id="p-count" style="color:var(--green)"></span></div>
@@ -155,7 +185,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
       </div>
       <div id="p-list"><div class="empty">Brak uczestników.</div></div>
     </div>
-
     <div class="card">
       <div class="card-title">Wpisz wyniki meczów</div>
       <div id="results-form"><div class="empty">Dodaj mecze żeby wpisać wyniki.</div></div>
@@ -165,14 +194,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
       </div>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">Wszystkie kolejki</div>
     <div id="rounds-list"><div class="empty">Brak kolejek.</div></div>
   </div>
 </div>
 
-<!-- FORMULARZ UCZESTNIKA -->
+<!-- FORMULARZ TYPOWANIA -->
 <div id="v-form" class="view">
   <div id="form-content"></div>
 </div>
@@ -190,14 +218,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
         <button class="btn btn-sm btn-green" onclick="window.print()">🖨 Drukuj</button>
       </div>
     </div>
-    <div class="info-note" style="margin-bottom:14px">
-      Zrób printscreen tej tabeli i wrzuć na WordPress. Zielone komórki = dokładny wynik (+3 pkt), żółte = trafiony typ (+1 pkt). Kolorowanie pojawia się po wpisaniu wyników przez admina.
-    </div>
+    <div class="info-note" style="margin-bottom:14px">Zrób printscreen i wrzuć na WordPress. Zielone = dokładny wynik (+3 pkt), żółte = trafiony typ (+1 pkt).</div>
     <div id="picks-table-wrap"><div class="empty"><span class="spinner"></span> Ładowanie...</div></div>
   </div>
 </div>
 
-<!-- TABELA SEZONOWA -->
+<!-- SEZON -->
 <div id="v-table" class="view">
   <div id="table-content"></div>
 </div>
@@ -221,8 +247,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const ADMIN_PIN = '1410'; // zmień na swój PIN admina!
 let activeRound = null, rounds = [], participants = [], matches = [];
+let currentUser = null; // {id, name, isAdmin}
 
+// ── TOAST ─────────────────────────────────────────────
 function toast(msg, err=false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -230,6 +259,108 @@ function toast(msg, err=false) {
   setTimeout(()=>t.className='toast', 3000);
 }
 
+// ── LOGIN ─────────────────────────────────────────────
+async function initLogin() {
+  const snap = await getDocs(collection(db,'participants'));
+  participants = snap.docs.map(d=>d.data()).sort((a,b)=>a.name.localeCompare(b.name,'pl'));
+  const sel = document.getElementById('login-name');
+  participants.forEach(p=>{
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = p.name;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change', onNameChange);
+}
+
+async function onNameChange() {
+  const id = document.getElementById('login-name').value;
+  if(!id) return;
+  const p = participants.find(p=>p.id===id);
+  if(!p) return;
+  const note = document.getElementById('first-login-note');
+  const label = document.getElementById('pin-label');
+  if(!p.pin) {
+    note.style.display = 'block';
+    label.textContent = 'Ustaw swój PIN (4 cyfry)';
+  } else {
+    note.style.display = 'none';
+    label.textContent = 'Wpisz PIN (4 cyfry)';
+  }
+  document.getElementById('login-pin').value = '';
+  document.getElementById('pin-error').textContent = '';
+}
+
+window.onPinInput = function() {
+  const pin = document.getElementById('login-pin').value;
+  if(pin.length === 4) document.getElementById('pin-error').textContent = '';
+}
+
+window.doLogin = async function() {
+  const id = document.getElementById('login-name').value;
+  const pin = document.getElementById('login-pin').value;
+  const errEl = document.getElementById('pin-error');
+
+  if(!id) { errEl.textContent = 'Wybierz swoje imię.'; return; }
+  if(pin.length !== 4 || !/^\d{4}$/.test(pin)) { errEl.textContent = 'PIN musi mieć dokładnie 4 cyfry.'; return; }
+
+  const p = participants.find(p=>p.id===id);
+  if(!p) return;
+
+  if(!p.pin) {
+    // pierwsze logowanie — ustaw PIN
+    await updateDoc(doc(db,'participants',p.id), {pin});
+    p.pin = pin;
+    toast('PIN ustawiony! Zapamiętaj go.');
+  } else {
+    if(p.pin !== pin) { errEl.textContent = 'Nieprawidłowy PIN. Spróbuj ponownie.'; return; }
+  }
+
+  currentUser = {id: p.id, name: p.name, isAdmin: false};
+  enterApp();
+}
+
+window.adminLogin = function() {
+  const pin = prompt('PIN admina:');
+  if(pin === ADMIN_PIN) {
+    currentUser = {id: 'admin', name: 'Admin', isAdmin: true};
+    enterApp();
+  } else {
+    alert('Nieprawidłowy PIN admina.');
+  }
+}
+
+function enterApp() {
+  document.getElementById('v-login').classList.remove('on');
+  document.getElementById('main-nav').style.display = 'flex';
+  document.getElementById('user-badge').style.display = 'block';
+  document.getElementById('user-badge').innerHTML =
+    '<span style="color:var(--green)">' + currentUser.name + '</span>' +
+    ' <button class="btn btn-sm" onclick="logout()" style="margin-left:8px">Wyloguj</button>';
+
+  if(currentUser.isAdmin) {
+    sv('admin');
+  } else {
+    // ukryj zakładkę admin dla uczestników
+    document.querySelectorAll('.nav-btn')[0].style.display = 'none';
+    sv('form');
+  }
+}
+
+window.logout = function() {
+  currentUser = null;
+  document.getElementById('main-nav').style.display = 'none';
+  document.getElementById('user-badge').style.display = 'none';
+  document.querySelectorAll('.nav-btn')[0].style.display = '';
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('on'));
+  document.getElementById('v-login').classList.add('on');
+  document.getElementById('login-name').value = '';
+  document.getElementById('login-pin').value = '';
+  document.getElementById('pin-error').textContent = '';
+  document.getElementById('first-login-note').style.display = 'none';
+}
+
+// ── NAV ───────────────────────────────────────────────
 window.sv = async function(v) {
   document.querySelectorAll('.nav-btn').forEach((b,i)=>
     b.classList.toggle('on',['admin','form','picks','table'][i]===v));
@@ -240,7 +371,7 @@ window.sv = async function(v) {
   if(v==='table') await renderSeasonTable();
 }
 
-// ROUNDS
+// ── ROUNDS ────────────────────────────────────────────
 window.createRound = async function() {
   const name = document.getElementById('i-rname').value.trim();
   if(!name){toast('Wpisz nazwę kolejki.',true);return;}
@@ -282,7 +413,7 @@ async function setActiveRound(r) {
   await loadParticipants();
 }
 
-// MATCHES
+// ── MATCHES ───────────────────────────────────────────
 async function loadMatches() {
   if(!activeRound)return;
   const snap = await getDocs(collection(db,'rounds',activeRound.id,'matches'));
@@ -352,7 +483,7 @@ window.saveResults = async function() {
   toast('Wyniki zapisane i punkty przeliczone!');
 }
 
-// PARTICIPANTS
+// ── PARTICIPANTS ──────────────────────────────────────
 async function loadParticipants() {
   const snap=await getDocs(collection(db,'participants'));
   participants=snap.docs.map(d=>d.data()).sort((a,b)=>a.name.localeCompare(b.name,'pl'));
@@ -364,9 +495,8 @@ window.addP = async function() {
   if(!n||!n.trim())return;
   const name=n.trim();
   if(participants.find(p=>p.name.toLowerCase()===name.toLowerCase())){toast('Uczestnik już istnieje.',true);return;}
-  const token=Math.random().toString(36).slice(2,9).toUpperCase();
   const id='p_'+Date.now();
-  await setDoc(doc(db,'participants',id),{id,name,token,seasonPts:0});
+  await setDoc(doc(db,'participants',id),{id,name,seasonPts:0});
   toast('Dodano: '+name);
   await loadParticipants();
 }
@@ -375,6 +505,12 @@ window.delP = async function(id) {
   if(!confirm('Usunąć uczestnika?'))return;
   await deleteDoc(doc(db,'participants',id));
   await loadParticipants();
+}
+
+window.resetPin = async function(id) {
+  if(!confirm('Zresetować PIN uczestnika? Będzie mógł ustawić nowy przy następnym logowaniu.'))return;
+  await updateDoc(doc(db,'participants',id),{pin:null});
+  toast('PIN zresetowany.');
 }
 
 function renderPList() {
@@ -387,20 +523,15 @@ function renderPList() {
     '<div style="display:flex;align-items:center;gap:10px">'+
     '<div class="av">'+p.name.slice(0,2).toUpperCase()+'</div>'+
     '<div><div style="font-size:14px;font-weight:500">'+p.name+'</div>'+
-    '<div style="font-size:11px;color:var(--muted);font-family:monospace">Token: '+p.token+'</div></div></div>'+
+    '<div style="font-size:11px;color:var(--muted)">'+(p.pin?'✅ PIN ustawiony':'⏳ Brak PINu')+'</div></div></div>'+
     '<div style="display:flex;gap:6px">'+
-    '<button class="btn btn-sm" onclick="copyLink(\''+p.token+'\')">📋 Link</button>'+
+    '<button class="btn btn-sm" onclick="resetPin(\''+p.id+'\')" '+(p.pin?'':'disabled')+'>🔄 Reset PIN</button>'+
     '<button class="btn btn-sm btn-danger" onclick="delP(\''+p.id+'\')">✕</button>'+
     '</div></div>'
   ).join('');
 }
 
-window.copyLink = function(token) {
-  const link=window.location.href.split('?')[0]+'?t='+token;
-  navigator.clipboard.writeText(link).then(()=>toast('Link skopiowany!')).catch(()=>alert('Link:\n'+link));
-}
-
-// POSTĘP TYPOWANIA
+// ── POSTĘP ────────────────────────────────────────────
 window.loadProgress = async function() {
   if(!activeRound||!participants.length)return;
   const el=document.getElementById('progress-list');
@@ -423,7 +554,7 @@ window.loadProgress = async function() {
     '</div>';
 }
 
-// PUNKTY
+// ── POINTS ────────────────────────────────────────────
 function calcMatchPts(ph,pa,rh,ra){
   ph=parseInt(ph);pa=parseInt(pa);rh=parseInt(rh);ra=parseInt(ra);
   if(isNaN(ph)||isNaN(pa)||isNaN(rh)||isNaN(ra))return 0;
@@ -461,35 +592,21 @@ async function calcSeasonPoints() {
   await loadParticipants();
 }
 
-async function loadRoundsData() {
-  const snap=await getDocs(collection(db,'rounds'));
-  rounds=snap.docs.map(d=>d.data()).sort((a,b)=>a.createdAt-b.createdAt);
-}
-
-// FORMULARZ
+// ── FORM ──────────────────────────────────────────────
 async function renderForm() {
   const el=document.getElementById('form-content');
-  const urlParams=new URLSearchParams(window.location.search);
-  const token=urlParams.get('t');
+  if(!currentUser){el.innerHTML='<div class="card"><div class="empty">Zaloguj się żeby typować.</div></div>';return;}
   await loadRoundsData();
-  if(!token){
-    el.innerHTML='<div class="card"><div class="empty">To jest widok uczestnika. Wejdź przez swój unikalny link żeby typować.</div></div>';
-    return;
-  }
-  const snap=await getDocs(collection(db,'participants'));
-  const pDoc=snap.docs.find(d=>d.data().token===token);
-  if(!pDoc){el.innerHTML='<div class="card"><div class="empty">Nieprawidłowy link. Skontaktuj się z adminem.</div></div>';return;}
-  const participant=pDoc.data();
   const openRound=rounds.find(r=>!r.closed)||rounds[rounds.length-1];
   if(!openRound){el.innerHTML='<div class="card"><div class="empty">Brak aktywnej kolejki do typowania.</div></div>';return;}
   const mSnap=await getDocs(collection(db,'rounds',openRound.id,'matches'));
   const roundMatches=mSnap.docs.map(d=>d.data()).sort((a,b)=>a.createdAt-b.createdAt);
-  if(!roundMatches.length){el.innerHTML='<div class="card"><div class="empty">Admin nie dodał jeszcze meczów.</div></div>';return;}
-  const existingPick=await getDoc(doc(db,'rounds',openRound.id,'picks',participant.id));
+  if(!roundMatches.length){el.innerHTML='<div class="card"><div class="empty">Admin nie dodał jeszcze meczów do tej kolejki.</div></div>';return;}
+  const existingPick=await getDoc(doc(db,'rounds',openRound.id,'picks',currentUser.id));
   const existingPicks=existingPick.exists()?existingPick.data().picks||{}:{};
   el.innerHTML=
     '<div class="card">'+
-    '<div class="card-title">👋 Cześć, '+participant.name+'!</div>'+
+    '<div class="card-title">👋 Cześć, '+currentUser.name+'!</div>'+
     '<div style="font-size:13px;color:var(--muted);margin-bottom:16px">Kolejka: <strong style="color:var(--text)">'+openRound.name+'</strong></div>'+
     roundMatches.map(m=>{
       const ep=existingPicks[m.id]||{};
@@ -502,9 +619,9 @@ async function renderForm() {
         '</div>';
     }).join('')+
     '<div style="margin-top:20px;text-align:center">'+
-    '<button class="btn btn-green" style="height:42px;padding:0 32px;font-size:15px" onclick="submitPicks(\''+participant.id+'\',\''+openRound.id+'\',['+roundMatches.map(m=>"'"+m.id+"'").join(',')+'])">✓ Wyślij typy</button>'+
+    '<button class="btn btn-green btn-big" onclick="submitPicks(\''+currentUser.id+'\',\''+openRound.id+'\',['+roundMatches.map(m=>"'"+m.id+"'").join(',')+'])">✓ Wyślij typy</button>'+
     '</div>'+
-    (existingPick.exists()?'<div class="info-note" style="text-align:center;margin-top:10px">ℹ️ Masz już zapisane typy — możesz je zmienić przed zamknięciem kolejki.</div>':'')+
+    (existingPick.exists()?'<div class="info-note" style="text-align:center;margin-top:10px">ℹ️ Masz już zapisane typy w tej kolejce — możesz je zmienić przed zamknięciem.</div>':'')+
     '</div>';
 }
 
@@ -520,50 +637,43 @@ window.submitPicks = async function(participantId,roundId,matchIds) {
   document.getElementById('form-content').innerHTML=
     '<div class="success"><div style="font-size:40px;margin-bottom:12px">⚽</div>'+
     '<h3>Typy zapisane!</h3>'+
-    '<p>Twoje typy zostały bezpiecznie zapisane w bazie danych.<br>Tabela typów pojawi się przed pierwszym meczem kolejki.</p></div>';
+    '<p>Twoje typy zostały bezpiecznie zapisane.<br>Tabela typów pojawi się przed pierwszym meczem kolejki.</p>'+
+    '<div style="margin-top:20px"><button class="btn btn-green" onclick="sv(\'picks\')">Zobacz tabelę typów →</button></div>'+
+    '</div>';
 }
 
-// TABELA TYPÓW (do printscreena)
+// ── PICKS TABLE ───────────────────────────────────────
+async function loadRoundsData() {
+  const snap=await getDocs(collection(db,'rounds'));
+  rounds=snap.docs.map(d=>d.data()).sort((a,b)=>a.createdAt-b.createdAt);
+}
+
 async function renderPicksTable(round) {
   const el=document.getElementById('picks-table-wrap');
   el.innerHTML='<div class="empty"><span class="spinner"></span> Ładowanie...</div>';
   await loadRoundsData();
-
-  // switcher kolejek
   const sw=document.getElementById('rounds-switcher');
   sw.innerHTML=rounds.map(r=>
     '<button class="btn btn-sm'+(activeRound&&r.id===activeRound.id?' btn-green':'')+'" onclick="switchPicksRound(\''+r.id+'\')">'+r.name+'</button>'
   ).join('');
-
-  if(!round){
-    round=rounds[rounds.length-1];
-    if(!round){el.innerHTML='<div class="empty">Brak kolejek.</div>';return;}
-  }
-
+  if(!round){round=rounds[rounds.length-1];if(!round){el.innerHTML='<div class="empty">Brak kolejek.</div>';return;}}
   document.getElementById('picks-round-name').textContent=round.name;
-
   const mSnap=await getDocs(collection(db,'rounds',round.id,'matches'));
   const rMatches=mSnap.docs.map(d=>d.data()).sort((a,b)=>a.createdAt-b.createdAt);
   if(!rMatches.length){el.innerHTML='<div class="empty">Brak meczów w tej kolejce.</div>';return;}
-
   const pSnap=await getDocs(collection(db,'participants'));
   const allP=pSnap.docs.map(d=>d.data()).sort((a,b)=>a.name.localeCompare(b.name,'pl'));
-
   const picksSnap=await getDocs(collection(db,'rounds',round.id,'picks'));
   const allPicks={};
   picksSnap.docs.forEach(d=>{allPicks[d.id]=d.data().picks||{};});
-
   const hasResults=rMatches.some(m=>m.rh!==''&&m.ra!=='');
-
   let html='<table class="picks-tbl"><thead><tr>'+
     '<th class="match-col">Mecz</th>'+
     allP.map(p=>'<th>'+p.name+'</th>').join('')+
     '</tr></thead><tbody>';
-
   rMatches.forEach((m,idx)=>{
     const rowClass=idx%2===0?'row-a':'row-b';
-    html+='<tr class="'+rowClass+'">'+
-      '<td class="match-name">'+m.h+' – '+m.a+'</td>'+
+    html+='<tr class="'+rowClass+'"><td class="match-name">'+m.h+' – '+m.a+'</td>'+
       allP.map(p=>{
         const pk=allPicks[p.id]?.[m.id];
         if(!pk)return'<td>–</td>';
@@ -572,10 +682,8 @@ async function renderPicksTable(round) {
         const pts=calcMatchPts(pk.h,pk.a,m.rh,m.ra);
         const cls=pts===3?'cell-ok':pts===1?'cell-half':'';
         return'<td'+(cls?' class="'+cls+'"':'')+'>'+val+'</td>';
-      }).join('')+
-      '</tr>';
+      }).join('')+'</tr>';
   });
-
   if(hasResults){
     html+='<tr class="pts-row"><td class="match-name">PUNKTY</td>'+
       allP.map(p=>{
@@ -583,10 +691,8 @@ async function renderPicksTable(round) {
         let pts=0;
         rMatches.forEach(m=>{const pk=picks[m.id];if(pk)pts+=calcMatchPts(pk.h,pk.a,m.rh,m.ra);});
         return'<td>'+pts+'</td>';
-      }).join('')+
-      '</tr>';
+      }).join('')+'</tr>';
   }
-
   html+='</tbody></table>';
   el.innerHTML=html;
 }
@@ -596,7 +702,7 @@ window.switchPicksRound = async function(id) {
   if(r){activeRound=r;await renderPicksTable(r);}
 }
 
-// TABELA SEZONOWA
+// ── SEASON TABLE ──────────────────────────────────────
 async function renderSeasonTable() {
   const el=document.getElementById('table-content');
   el.innerHTML='<div class="card"><div class="empty"><span class="spinner"></span> Ładowanie...</div></div>';
@@ -619,7 +725,9 @@ async function renderSeasonTable() {
       const rc=i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'';
       return'<tr class="'+rc+'">'+
         '<td><span class="rank-num">'+(i+1)+'</span></td>'+
-        '<td><div style="display:flex;align-items:center;gap:8px"><div class="av">'+p.name.slice(0,2).toUpperCase()+'</div><span style="font-weight:500">'+p.name+'</span></div></td>'+
+        '<td><div style="display:flex;align-items:center;gap:8px">'+
+        '<div class="av">'+p.name.slice(0,2).toUpperCase()+'</div>'+
+        '<span style="font-weight:500">'+p.name+'</span></div></td>'+
         '<td><span class="pts-big">'+(p.seasonPts||0)+'</span></td>'+
         rounds.map(r=>'<td style="text-align:center;font-weight:500">'+(p.roundPts[r.id]!==undefined?p.roundPts[r.id]:'–')+'</td>').join('')+
         '</tr>';
@@ -627,15 +735,9 @@ async function renderSeasonTable() {
     '</tbody></table></div>';
 }
 
-// INIT
-async function init(){
-  await loadRounds();
-  await loadParticipants();
-  const urlParams=new URLSearchParams(window.location.search);
-  if(urlParams.get('t'))sv('form');
-}
-window.calcMatchPts=calcMatchPts;
-init();
+// ── INIT ──────────────────────────────────────────────
+initLogin();
+window.calcMatchPts = calcMatchPts;
 </script>
 </body>
 </html>
