@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Typowy Blog Typer</title>
+<title>UCL Typer</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
 :root {
@@ -115,7 +115,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 </head>
 <body>
 <header class="header">
-  <div class="logo">Typowy Blog <span>Typer</span></div>
+  <div class="logo">UCL <span>Typer</span></div>
   <nav class="nav" id="main-nav" style="display:none">
     <button class="nav-btn on" onclick="sv('admin')">⚙ Admin</button>
     <button class="nav-btn" onclick="sv('form')">📝 Typuj</button>
@@ -129,7 +129,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 <!-- LOGIN -->
 <div id="v-login" class="view on">
   <div class="login-wrap">
-    <div class="login-title">⚽ Typowy Blog Typer</div>
+    <div class="login-title">⚽ UCL Typer</div>
     <div class="login-sub">Liga Mistrzów — typowanie wyników</div>
     <select class="name-select" id="login-name">
       <option value="">— Wybierz swoje imię —</option>
@@ -238,9 +238,9 @@ import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, dele
 
 const firebaseConfig = {
   apiKey: "AIzaSyAQo-27fD97AYKYBE54pllxqvS9uggJmwc",
-  authDomain: "Typowy Blog-typer.firebaseapp.com",
-  projectId: "Typowy Blog-typer",
-  storageBucket: "Typowy Blog-typer.firebasestorage.app",
+  authDomain: "ucl-typer.firebaseapp.com",
+  projectId: "ucl-typer",
+  storageBucket: "ucl-typer.firebasestorage.app",
   messagingSenderId: "465756157240",
   appId: "1:465756157240:web:0efe4ced8f1a1f3df2bdcd"
 };
